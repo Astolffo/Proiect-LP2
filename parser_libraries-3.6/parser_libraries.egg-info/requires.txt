@@ -1,0 +1,8 @@
+bs4
+cryptography
+openpy
+pymysql
+pytelegrambotapi
+requests
+selenium
+urllib3
