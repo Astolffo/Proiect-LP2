@@ -1,9 +1,6 @@
-import os
 import urllib
 import urllib.request
 from bs4 import BeautifulSoup
-import csv
-import pandas as pd
 
 def make_soup(url):
     thepage = urllib.request.urlopen(url)
@@ -24,4 +21,3 @@ print(dateCU)
 file = open("CertificateUrbanism.tsv", "w", encoding='utf8')
 file.write(dateCU)
 file.close()
-#are diacritice si apare unicode
