@@ -20,36 +20,32 @@ Beneficiar = []
 Adresa = []
 Descriere = []
 
-Date = soup.find_all('tr', attrs={'role':'row'})
+with open('CertificateUrbanismIncercari.tsv', 'r', encoding='utf8') as tsv:
+    Date = [line.strip().split('\t') for line in tsv]
 
 
 for container in Date:
-    dateNDCU = container.find_all('span', attrs={'id':"view:_id1:dynamicViewPanel1:0:viewColumn6:_internalViewText"})
+    dateNDCU = container.re.findilter(r'^(\d+\d+\d+).(\d+.\d+.\d+)')
     NDCU.append(dateNDCU)
 
-    dateDII = container.find_all('span', attrs={'id':"view:_id1:dynamicViewPanel1:0:viewColumn7:_internalViewText"})
+    dateDII = container.re.findilter(r'(C.F.|CF| C.F.| CF)(Nr.\d+|Nr. \d+| Nr.\d+| Nr. \d+| nr.\d+| nr. \d+|nr.\d+|nr. \d+|CF.\d+)')
     DII.append(dateDII)
 
-    dateBeneficiar = container.find_all('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn8:_internalViewText"})
-    Beneficiar.append(dateBeneficiar)
-
-    dateAdresa = container.find_all('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn9:_internalViewText"})
+    dateAdresa = container.re.findilter(r'')
     Adresa.append(dateAdresa)
 
-    dateDescriere = container.find_all('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn10:_internalViewText"})
+    dateDescriere = container.re.findilter('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn10:_internalViewText"})
     Descriere.append(dateDescriere)
 
 tabel = pd.DataFrame({
     'Nr./Data CU':NDCU,
     'Date identificare imobil':DII,
-    'Beneficiar':Beneficiar,
     'Adresa':Adresa,
     'Descriere':Descriere,
 })
 
 tabel['Nr./Data CU'] = tabel['Nr./Data CU'].str.extract('(\d+)').astype(str)
 tabel['Date identificare imobil'] = tabel['Date identificare imobil'].str.extract('(\d+)').astype(str)
-tabel['Beneficiar'] = tabel['Beneficiar'].str.extract('(\d+)').astype(str)
 tabel['Adresa'] = tabel['Adresa'].str.extract('(\d+)').astype(str)
 tabel['Descriere'] = tabel['Descriere'].str.extract('(\d+)').astype(str)
 tabel.to_csv('CUIncerc.csv')
