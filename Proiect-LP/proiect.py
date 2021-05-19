@@ -1,8 +1,7 @@
+import re
 import urllib
 import urllib.request
-import pandas as pd
 from bs4 import BeautifulSoup
-import numpy as np
 
 
 def make_soup(url):
@@ -20,40 +19,6 @@ Beneficiar = []
 Adresa = []
 Descriere = []
 
-Date = soup.find_all('tr', attrs={'role':'row'})
-
-
-for container in Date:
-    dateNDCU = container.find_all('span', attrs={'id':"view:_id1:dynamicViewPanel1:0:viewColumn6:_internalViewText"})
-    NDCU.append(dateNDCU)
-
-    dateDII = container.find_all('span', attrs={'id':"view:_id1:dynamicViewPanel1:0:viewColumn7:_internalViewText"})
-    DII.append(dateDII)
-
-    dateBeneficiar = container.find_all('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn8:_internalViewText"})
-    Beneficiar.append(dateBeneficiar)
-
-    dateAdresa = container.find_all('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn9:_internalViewText"})
-    Adresa.append(dateAdresa)
-
-    dateDescriere = container.find_all('span', attrs={'id': "view:_id1:dynamicViewPanel1:0:viewColumn10:_internalViewText"})
-    Descriere.append(dateDescriere)
-
-tabel = pd.DataFrame({
-    'Nr./Data CU':NDCU,
-    'Date identificare imobil':DII,
-    'Beneficiar':Beneficiar,
-    'Adresa':Adresa,
-    'Descriere':Descriere,
-})
-
-tabel['Nr./Data CU'] = tabel['Nr./Data CU'].str.extract('(\d+)').astype(str)
-tabel['Date identificare imobil'] = tabel['Date identificare imobil'].str.extract('(\d+)').astype(str)
-tabel['Beneficiar'] = tabel['Beneficiar'].str.extract('(\d+)').astype(str)
-tabel['Adresa'] = tabel['Adresa'].str.extract('(\d+)').astype(str)
-tabel['Descriere'] = tabel['Descriere'].str.extract('(\d+)').astype(str)
-tabel.to_csv('CUIncerc.csv')
-
 table = soup.find("table",{"class" : "xspDataTable"})
 dateCU = dateCUsaved = ""
 for record in table.find_all("tr"):
@@ -61,10 +26,33 @@ for record in table.find_all("tr"):
         newData = data.text.replace("\t", " ").replace("\n", " ").replace("\r", " ")
         dateCU = dateCU + newData + "\t"
     dateCU = dateCU + "\n"
-print(dateCU)
+#print(dateCU)
 
-
-
-file = open("CertificateUrbanism.csv", "w", encoding='utf8')
+file = open("CertificateUrbanismIncercari.csv", "w", encoding='utf8')
 file.write(dateCU)
 file.close()
+
+Date = str(dateCU)
+
+#for container in Date:
+test_str = Date
+regex = r"(\w{3,} nr.\d+|\w{3,}  nr.\d+|\w+ \w{3,} nr.\d+ ap.\d+|\w{3,} \w+\t nr,\d+ bl.- sc.-et.- ap.\d+|\w+ nr.\d\w|\w{3,} nr.\d+ ap.\d+| \w+ \w+ nr.\d+ ap.\d+)"
+dateAdresa = re.finditer(regex,test_str)
+
+for nrCautari, adresaGasita in enumerate(dateAdresa,start = 1):
+    print("S-au gasit {nrCautari} ,acestea fiind : {adresaGasita}".format(nrCautari=nrCautari,adresaGasita=adresaGasita.group()))
+
+    locatie = str(adresaGasita)
+
+    file1 = open("adrese.txt","w",encoding='utf8')
+    file1.write(locatie)
+    citire = open("adrese.txt","r",encoding='utf8')
+    print(citire)
+
+#    Adresa.append(dateAdresa)
+
+
+
+#file = open("CUIncercari.csv", "w", encoding='utf8')
+#file.write(dateCUsaved)
+#file.close()
