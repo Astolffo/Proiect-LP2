@@ -20,7 +20,7 @@ Beneficiar = []
 Adresa = []
 Descriere = []
 
-with open('CertificateUrbanismIncercari.tsv', 'r', encoding='utf8') as tsv:
+with open('CertificateUrbanismIncercari.csv', 'r', encoding='utf8') as tsv:
     Date = [line.strip().split('\t') for line in tsv]
 
 
@@ -54,11 +54,11 @@ table = soup.find("table",{"class" : "xspDataTable"})
 dateCU = dateCUsaved = ""
 for record in table.find_all("tr"):
     for data in record.findAll("td"):
-        newData = data.text.replace("\t", " ").replace("\n", " ").replace("\r", " ")
+        newData = data.text.replace("\t", " ").replace("\n", " ").replace("\r", " ").replace("")
         dateCU = dateCU + newData + "\t"
     dateCU = dateCU + "\n"
 print(dateCU)
 
-file = open("CertificateUrbanismIncercari.tsv", "w", encoding='utf8')
+file = open("CertificateUrbanismIncercari.csv", "w", encoding='utf8')
 file.write(dateCU)
 file.close()

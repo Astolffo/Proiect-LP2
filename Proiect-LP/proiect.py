@@ -63,6 +63,6 @@ for record in table.find_all("tr"):
     dateCU = dateCU + "\n"
 print(dateCU)
 
-file = open("CertificateUrbanism.tsv", "w", encoding='utf8')
+file = open("CertificateUrbanism.csv", "w", encoding='utf8')
 file.write(dateCU)
 file.close()
