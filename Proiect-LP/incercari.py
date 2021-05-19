@@ -1,8 +1,7 @@
+import re
 import urllib
 import urllib.request
-import pandas as pd
 from bs4 import BeautifulSoup
-import numpy as np
 
 
 def make_soup(url):
@@ -35,9 +34,22 @@ for record in table.find_all("tr"):
 
 Date = str(dateCU)
 
-for container in Date:
-    dateAdresa = container.find(r'')
-    Adresa.append(dateAdresa)
+#for container in Date:
+test_str = Date
+regex = r"(\w{3,} nr.\d+|\w{3,}  nr.\d+|\w+ \w{3,} nr.\d+ ap.\d+|\w{3,} \w+\t nr,\d+ bl.- sc.-et.- ap.\d+|\w+ nr.\d\w|\w{3,} nr.\d+ ap.\d+| \w+ \w+ nr.\d+ ap.\d+)"
+dateAdresa = re.finditer(regex,test_str)
+
+for nrCautari, adresaGasita in enumerate(dateAdresa,start = 1):
+    print("S-au gasit {nrCautari} ,acestea fiind : {adresaGasita}".format(nrCautari=nrCautari,adresaGasita=adresaGasita.group()))
+
+    locatie = str(adresaGasita)
+
+    file1 = open("adrese.txt","w",encoding='utf8')
+    file1.write(locatie)
+    citire = open("adrese.txt","r",encoding='utf8')
+    print(citire)
+
+#    Adresa.append(dateAdresa)
 
 
 
