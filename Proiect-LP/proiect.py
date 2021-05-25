@@ -36,14 +36,14 @@ regex = r"(\w{3,} nr.\d+|\w{3,}  nr.\d+|\w+ \w{3,} nr.\d+ ap.\d+|\w{3,} \w+\t nr
 dateAdresa = re.finditer(regex,test_str)
 
 for nrCautari, adresaGasita in enumerate(dateAdresa,start = 1):
-    #print("S-au gasit {nrCautari} ,acestea fiind : {adresaGasita}".format(nrCautari=nrCautari,adresaGasita=adresaGasita.group()))
+    print("S-au gasit {nrCautari} ,acestea fiind : {adresaGasita}".format(nrCautari=nrCautari,adresaGasita=adresaGasita.group()))
 
     locatie = str(adresaGasita.group())
 
     file1 = open("adrese.txt","w",encoding='utf8')
     file1.write(locatie)
     citire = open("adrese.txt","r",encoding='utf8')
-    print(citire)
+    #print(citire)
 
 #st.image("geocoding.jpg")
 #st.title("Geocoding Application in Python")
