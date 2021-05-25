@@ -1,0 +1,1 @@
+<re.Match object; span=(19145, 19159), match='Molidului nr.5'>
