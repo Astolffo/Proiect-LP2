@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 url_csv = "https://xpage.primariatm.ro//" + link_list[0]
 https://xpage.pr
 df = pd.read_csv('imariatm.ro/lotusweb.nsf/certificateurbanism.xsp')
@@ -51,3 +52,6 @@ fig.update_layout(
 )
 
 fig.show()
+=======
+acd
+>>>>>>> origin/master

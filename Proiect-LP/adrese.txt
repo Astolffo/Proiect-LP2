@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <re.Match object; span=(19145, 19159), match='Molidului nr.5'>
+=======
+BARSEI nr.28
+>>>>>>> origin/master
