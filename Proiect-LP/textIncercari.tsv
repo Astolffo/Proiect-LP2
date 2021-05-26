@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 url_csv = "https://xpage.primariatm.ro//" + link_list[0]
 https://xpage.pr
-df = pd.read_csv('imariatm.ro/lotusweb.nsf/certificateurbanism.xsp')
+df = pd.read_csv('primariatm.ro/lotusweb.nsf/certificateurbanism.xsp')
 site_lat = df.lat
 site_lon = df.lon
 locations_name = df.text
